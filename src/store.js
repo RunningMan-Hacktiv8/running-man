@@ -45,8 +45,15 @@ export default new Vuex.Store({
         }, function (err) {
           if (err) console.log(err)
           // console.log('berhasilll')
-          self.state.username = ''
-          self.state.roomName = ''
+          database.ref('users/' + self.state.username).set({
+            position: 0,
+            username: self.state.username
+          }, function (err) {
+            if (err) console.log(err)
+            console.log('berhasilll create user')
+            self.state.username = ''
+            self.state.roomName = ''
+          })
         })
       }
     }

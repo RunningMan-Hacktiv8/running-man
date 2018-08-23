@@ -10,7 +10,6 @@
             </button>
           </div>
           <div class="modal-body">
-            {{roomName}}
             <div class="form-group">
               <label>Username</label>
               <input type="text" class="form-control" v-model="username" placeholder="Username">
