@@ -1,28 +1,19 @@
 <template>
   <div class="about">
     <div class="track-field">
-
-        km: {{ position1 }}
+      km: {{ position1 }}
     <div class="player1">
       <img src="../assets/kisspng-sonic-the-hedgehog-2-mario-tails-metal-sonic-pixel-5ac493b33cdba2.7782679115228323072493 (1).png" alt="" v-bind:style="{ marginLeft: position1 + 'px' }">
     </div>
-    
-        km: {{ position2 }}
+      km: {{ position2 }}
     <div class="player2">
       <img src="../assets/kisspng-super-mario-advance-4-super-mario-bros-3-super-m-mario-5abb95e6e038c3.9712500315222430469184 (1).png" alt="" v-bind:style="{ marginLeft: position2 + 'px' }">
     </div>
-
-    
     </div>
-
     <button id="player1-button" @click="counterPlayer1">run</button>
-    
     <button id="player2-button" @click="counterPlayer2">run</button>
-
   </div>
 </template>
-
-
 
 <script>
 export default {
