@@ -21,11 +21,8 @@
     <button id="player1-button" @click="counterPlayer1">run-player-1</button>
     
     <button id="player2-button" @click="counterPlayer2">run-player-2</button>
-
   </div>
 </template>
-
-
 
 <script>
 const soundMarioWin =
