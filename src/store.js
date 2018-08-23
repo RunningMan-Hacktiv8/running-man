@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import firebase from 'firebase'
 import database from '@/firebase/firebase.js'
 
 Vue.use(Vuex)
@@ -9,7 +8,9 @@ export default new Vuex.Store({
   state: {
     username: '',
     roomName: '',
-    rooms: ''
+    rooms: '',
+    player1: '',
+    player2: ''
   },
   mutations: {
     setUsername (state, payload) {
@@ -31,22 +32,19 @@ export default new Vuex.Store({
       let status = false
       let self = this
       for (let i = 0; i < dataRooms.length; i++) {
-        // console.log('nama room--', dataRooms[i].roomName, self.state.roomName)
         if (dataRooms[i].roomName === self.state.roomName) {
-          // console.log('masuk sini nih')
           status = true
         }
       }
       if (!status) {
-        // console.log('masuk create --->')
-        database.ref('rooms/' + self.state.roomName).set({
-          players: 1,
-          roomName: self.state.roomName
+        database.ref('rooms/' + self.state.roomName + '/player1').set({
+          username: self.state.username,
+          position: 0
         }, function (err) {
           if (err) console.log(err)
-          // console.log('berhasilll')
-          self.state.username = ''
-          self.state.roomName = ''
+          self.state.player1 = self.state.username
+          console.log('berhasilll')
+          console.log(self.state.player1)
         })
       }
     }
