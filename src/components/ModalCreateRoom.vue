@@ -4,7 +4,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Modal title {{username}} {{roomName}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -21,7 +21,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" @click.once="create" data-dismiss="modal">Create</button>
+            <button type="button" class="btn btn-primary" @click="toCreate" data-dismiss="modal">Create</button>
           </div>
         </div>
       </div>
@@ -42,7 +42,8 @@ export default {
   computed: {
     ...mapState([
       'username',
-      'roomName'
+      'roomName',
+      'rooms'
     ]),
     username: {
       get () {
@@ -63,7 +64,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'create'
+      'toCreate'
     ])
     // createRoom () {
     //   console.log('coba')
