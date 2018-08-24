@@ -15,12 +15,6 @@
           
       <!-- </div> -->
     </div>
-
-    
-
-    <button id="player1-button" @click="counterPlayer1">run-player-1</button>
-    
-    <button id="player2-button" @click="counterPlayer2">run-player-2</button>
   </div>
 </template>
 
@@ -30,6 +24,16 @@ const soundMarioWin =
 const soundMarioStart =
   "https://themushroomkingdom.net/sounds/wav/sm3dl/sm3dl_mario_here_we_go.wav";
 
+const soundSonicWin =
+  "https://wingless-seraph.net/sound/voice/31_jakigan_win.wav";
+const soundSonicStart =
+  "https://wingless-seraph.net/sound/voice/03_jakigan_before.wav";
+
+const runAudio =
+  "https://themushroomkingdom.net/sounds/wav/smb3/smb3_stomp.wav";
+
+import { mapState, mapActions } from "vuex";
+
 export default {
   data: function() {
     return {
@@ -37,56 +41,74 @@ export default {
       position2: 0
     };
   },
-
+  computed: {
+    ...mapState(["statusPlayer1"])
+  },
   methods: {
-    counterPlayer1: function() {
-      this.position1 += 1;
-      if (this.position1 >= 100) {
-        alert("menang bro");
-      }
-      console.log(this.position1);
-    },
-
-    counterPlayer2: function() {
-      this.position2 += 1;
-      if (this.position2 >= 100) {
-        alert("menang bro");
-      }
-      console.log(this.position2);
-    },
-
-    say: function(msg) {
-      alert(msg);
-    }
+    // counterPlayer1: function() {
+    //   if (this.statusPlayer1) {
+    //     if(this.position1<90){
+    //       this.position1 += 2;
+    //     }
+    //     else if(this.position1 == 90) {
+    //       alert("menang bro");
+    //     }
+    //     console.log("masuk lari 1",this.position1);
+    //   }
+    // },
+    // counterPlayer2: function() {
+    //   if (!this.statusPlayer1) {
+    //     this.position2 += 1;
+    //     if (this.position2 >= 100) {
+    //       alert("menang bro");
+    //     }
+    //     console.log("masuk player 2",this.position2);
+    //   }
+    // },
   },
   mounted() {
     let that = this;
     let that2 = this;
 
     window.addEventListener("keypress", function(e) {
-      if (e.keyCode == 32) {
-        console.log(that.position1);
-
-        that.position1 += 1;
-        if (that.position1 >= 100) {
-          alert("menang bro");
-          var audio = new Audio(sound);
-          audio.play();
+      //Sonic
+      if (that.statusPlayer1) {
+        if (e.keyCode == 32) {
+          console.log("position player 1",that.position1);
+          if(that.position1<90){
+            that.position1 += 2;
+            var run = new Audio(runAudio);
+            run.play();
+          }
+          if (that.position1 == 90) {
+            var audio = new Audio(soundSonicWin);
+            audio.play();
+            alert("player 1 win");
+          }
+          if (that.position1 == 2) {
+            var audio = new Audio(soundSonicStart);
+            audio.play();
+          }
         }
-      }
+      //Mario
+      } else if (!that2.statusPlayer1) {
+        if (e.keyCode == 32) {
+          console.log(that2.position2);
+          if(that.position2<90){
+            that2.position2 += 2;
+            var run = new Audio(runAudio);
+            run.play();
+          }        
 
-      if (e.keyCode == 49) {
-        console.log(that2.position2);
-
-        that2.position2 += 1;
-
-        if (that2.position2 >= 100) {
-          var audio = new Audio(soundMarioWin);
-          audio.play();
-        }
-        if (that2.position2 < 2) {
-          var audio = new Audio(soundMarioStart);
-          audio.play();
+          if (that2.position2 == 90) {
+            var audio = new Audio(soundMarioWin);
+            audio.play();
+            alert("player 2 win");
+          }
+          if (that2.position2 == 2) {
+            var audio = new Audio(soundMarioStart);
+            audio.play();
+          }
         }
       }
     });
@@ -98,7 +120,7 @@ export default {
 <style>
 .about {
   background-image: url("https://i.imgur.com/cGtTiIx.png");
-  border: solid ;
+  border: solid;
   height: 800px;
 }
 
