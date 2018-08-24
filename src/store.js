@@ -11,8 +11,8 @@ export default new Vuex.Store({
     rooms: '',
     player1: '',
     player2: '',
-    statusPlayer1: false,
-    playerOnRoom:''
+    statusPlayer1: true,
+    playerOnRoom: ''
   },
   mutations: {
     setUsername (state, payload) {
@@ -24,7 +24,7 @@ export default new Vuex.Store({
     setListRooms (state, payload) {
       state.rooms = payload
     },
-    setPlayerOnRoom ( state, payload){
+    setPlayerOnRoom (state, payload) {
       state.playerOnRoom = payload
     }
   },
