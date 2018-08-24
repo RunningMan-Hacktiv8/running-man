@@ -1,5 +1,8 @@
 <template>
   <div class="about">
+    <audio id=“audio”  autoplay>
+        <source src="http://66.90.93.122/ost/super-mario-bros-2/amokcrqa/03%20-%20Super%20Mario%20Bros%202%20Main%20Theme.mp3"/>
+    </audio>
     <div class="players">
       <div class="player1">
         .
@@ -66,8 +69,9 @@ export default {
     let that2 = this;
     window.addEventListener("keypress", function(e) {
       //Sonic
-      if (that.statusPlayer1) {        
-            if (e.keyCode == 32) {
+      if (that.statusPlayer1) {
+        if(that.position2 < 90) {
+          if (e.keyCode == 32) {
               console.log("position player 1",that.position1);
               if(that.position1<90){
 
@@ -101,42 +105,54 @@ export default {
                 audio.play();
               }
             }
-          
+        }else {
+          alert('you lose ! :(')
+        }
       //Mario
       } else if (!that2.statusPlayer1) {
-        if (e.keyCode == 32) {
-          if(that.position2<90){
-            database.ref('rooms/'+that.roomName+'/player2').set({
-              username: that.player2,
-              position: that.position2 + 2
-            },function(err){
-              if(err){
-                console.log(err)
-              }
-              else{
-                var run = new Audio(runAudio);
-                run.play();
-              }
-            })
-          }        
+        if(that2.position1 < 90) {
+          if (e.keyCode == 32) {
+            if(that.position2<90){
+              database.ref('rooms/'+that.roomName+'/player2').set({
+                username: that.player2,
+                position: that.position2 + 2
+              },function(err){
+                if(err){
+                  console.log(err)
+                }
+                else{
+                  var run = new Audio(runAudio);
+                  run.play();
+                }
+              })
+            }        
 
-          if (that2.position2 == 90) {
-            var audio = new Audio(soundMarioWin);
-            audio.play();
-            swal({
-              title: "Player 2 win!",
-              text: "Lets play again!",
-              icon: "success",
-              button: "Yeay!",
+            if (that2.position2 == 90) {
+              var audio = new Audio(soundMarioWin);
+              audio.play();
+              swal({
+                title: "Player 2 win!",
+                text: "Lets play again!",
+                icon: "success",
+                button: "Yeay!",
+              });
+              router.push('/')
+            }
+            if (that2.position2 == 2) {
+              var audio = new Audio(soundMarioStart);
+              audio.play()
+            }
+          }
+        }else {
+           swal(`You lose !`)
+            .then((value)=> {
+              if(value){
+                router.push('/')
+              }
             });
-            router.push('/')
-          }
-          if (that2.position2 == 2) {
-            var audio = new Audio(soundMarioStart);
-            audio.play()
-          }
+          
         }
-      }
+      } 
     });
   }
 };

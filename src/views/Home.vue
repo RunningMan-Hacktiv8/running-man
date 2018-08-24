@@ -8,17 +8,17 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import ModalCreateRoom from '@/components/ModalCreateRoom.vue'
+import HelloWorld from "@/components/HelloWorld.vue";
+import ModalCreateRoom from "@/components/ModalCreateRoom.vue";
 
 export default {
-  name: 'home',
+  name: "home",
   components: {
-    HelloWorld, ModalCreateRoom
+    HelloWorld,
+    ModalCreateRoom
   }
-}
+};
 </script>
 
 <style>
-
 </style>

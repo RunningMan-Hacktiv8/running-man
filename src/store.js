@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import database from '@/firebase/firebase.js'
 import router from './router'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({

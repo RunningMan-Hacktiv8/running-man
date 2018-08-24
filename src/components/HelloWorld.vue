@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+        <audio id='audio' autoplay>
+        <source src='http://66.90.93.122/ost/super-mario-bros/qqrfebix/08%20-%20Water%20World.mp3' />
+       </audio>
 <a href="https://fontmeme.com/pixel-fonts/"><img src="https://fontmeme.com/permalink/180824/195eed1acf73392ca82b3ee07ff7fd9e.png" alt="pixel-fonts" border="0"></a>
     <div class="row">
       <div class="main-image">
