@@ -1,6 +1,8 @@
 <template>
   <div class="about">
     <!-- <div class="track-field"> -->
+
+      
       <div class="players">
 
           <div class="player1">
@@ -18,9 +20,7 @@
 
     
 
-    <button id="player1-button" @click="counterPlayer1">run-player-1</button>
-    
-    <button id="player2-button" @click="counterPlayer2">run-player-2</button>
+ 
   </div>
 </template>
 
@@ -29,6 +29,14 @@ const soundMarioWin =
   "https://themushroomkingdom.net/sounds/wav/mparty8/mparty8_mario_10.wav";
 const soundMarioStart =
   "https://themushroomkingdom.net/sounds/wav/sm3dl/sm3dl_mario_here_we_go.wav";
+
+const soundSonicWin =
+  "https://wingless-seraph.net/sound/voice/31_jakigan_win.wav";
+const soundSonicStart =
+  "https://wingless-seraph.net/sound/voice/03_jakigan_before.wav";
+
+const runAudio =
+  "https://themushroomkingdom.net/sounds/wav/smb3/smb3_stomp.wav";
 
 export default {
   data: function() {
@@ -42,7 +50,6 @@ export default {
     counterPlayer1: function() {
       this.position1 += 1;
       if (this.position1 >= 100) {
-        alert("menang bro");
       }
       console.log(this.position1);
     },
@@ -50,7 +57,6 @@ export default {
     counterPlayer2: function() {
       this.position2 += 1;
       if (this.position2 >= 100) {
-        alert("menang bro");
       }
       console.log(this.position2);
     },
@@ -64,23 +70,40 @@ export default {
     let that2 = this;
 
     window.addEventListener("keypress", function(e) {
+      //Sonic
       if (e.keyCode == 32) {
         console.log(that.position1);
 
+        if (that.position1 % 2 == 0) {
+          var run = new Audio(runAudio);
+          run.play();
+        }
+
         that.position1 += 1;
         if (that.position1 >= 100) {
-          alert("menang bro");
-          var audio = new Audio(sound);
+          alert("Sonic Wins");
+          var audio = new Audio(soundSonicWin);
           audio.play();
+        }
+
+        if (that.position1 < 2) {
+          var run = new Audio(soundSonicStart);
+
+          run.play();
         }
       }
 
+      //Mario
       if (e.keyCode == 49) {
         console.log(that2.position2);
 
+        var run = new Audio(runAudio);
+        run.play();
         that2.position2 += 1;
 
         if (that2.position2 >= 100) {
+          alert("Mario Wins");
+
           var audio = new Audio(soundMarioWin);
           audio.play();
         }
@@ -98,7 +121,7 @@ export default {
 <style>
 .about {
   background-image: url("https://i.imgur.com/cGtTiIx.png");
-  border: solid ;
+  border: solid;
   height: 800px;
 }
 
