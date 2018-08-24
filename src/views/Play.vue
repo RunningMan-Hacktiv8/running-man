@@ -3,23 +3,16 @@
     <audio id=“audio”  autoplay>
         <source src="http://66.90.93.122/ost/super-mario-bros-2/amokcrqa/03%20-%20Super%20Mario%20Bros%202%20Main%20Theme.mp3"/>
     </audio>
-    <!-- <div class="track-field"> -->
-
+    <div class="players">
+      <div class="player1">
+        .
+        <img src="../assets/kisspng-sonic-the-hedgehog-2-mario-tails-metal-sonic-pixel-5ac493b33cdba2.7782679115228323072493 (1).png" alt="" v-bind:style="{ marginLeft: position1 + '%' }">
+      </div>
       
-      <div class="players">
-          <!-- {{playerOnRoom}} -->
-          <button @click="getPositionFB">clickk</button>
-          <div class="player1">
-              km: {{ position1 }}
-            <img src="../assets/kisspng-sonic-the-hedgehog-2-mario-tails-metal-sonic-pixel-5ac493b33cdba2.7782679115228323072493 (1).png" alt="" v-bind:style="{ marginLeft: position1 + '%' }">
-          </div>
-          
-          <div class="player2">
-              km: {{ position2 }}
-            <img src="../assets/kisspng-super-mario-advance-4-super-mario-bros-3-super-m-mario-5abb95e6e038c3.9712500315222430469184 (1).png" alt="" v-bind:style="{ marginLeft: position2 + '%' }">
-          </div>
-          
-      <!-- </div> -->
+      <div class="player2">
+        .
+        <img src="../assets/kisspng-super-mario-advance-4-super-mario-bros-3-super-m-mario-5abb95e6e038c3.9712500315222430469184 (1).png" alt="" v-bind:style="{ marginLeft: position2 + '%' }">
+      </div>
     </div>
   </div>
 </template>
@@ -40,7 +33,7 @@ const runAudio =
 
 import { mapState, mapActions } from "vuex";
 import database from '@/firebase/firebase.js'
-
+import router from '../router.js'
 export default {
   data: function() {
     return {
@@ -49,34 +42,18 @@ export default {
     };
   },
   created(){
-    // this.playGame()
     this.getPositionFB()
   },
   computed: {
-    ...mapState(["statusPlayer1","rooms","roomName","player1","player2"])
+    ...mapState(["statusPlayer1","rooms","roomName","player1","player2"], 'roomLength')
   },
   methods: {
     ...mapActions([
-      'getlistRoom'
+      'getlistRoom', 'getRoomLength'
     ]),
     playGame(){
       this.getlistRoom()
       this.playerOnRoom = this.rooms
-      // for (let i = 0; i < this.rooms.length; i++) {
-      //   for (var key in this.rooms[i]) {
-      //     for( let j = 0; j < this.rooms[i][key].length; j++){
-      //       for (var keyPlay in this.rooms[i][key][j]) {
-
-      //         this.playerOnRoom = this.rooms[i][key][j][keyPlay]
-      //         console.log("masuk");
-      //       }
-      //     }
-      //     // if (key === this.state.roomName) {
-            
-      //       // context.commit('setPlayerOnRoom', test)            
-      //     // }
-      //   }
-      // }
     },
     getPositionFB(){
       let self = this
@@ -88,7 +65,6 @@ export default {
     }
   },
   mounted() {
-    // this.playGame()
     let that = this;
     let that2 = this;
     window.addEventListener("keypress", function(e) {
@@ -96,34 +72,39 @@ export default {
       if (that.statusPlayer1) {
         if(that.position2 < 90) {
           if (e.keyCode == 32) {
-            console.log("position player 1",that.position1);
-            if(that.position1<90){
-  
-              database.ref('rooms/'+that.roomName+'/player1').set({
-                username: that.player1,
-                position: that.position1 + 2
-              },function(err){
-                if(err){
-                  console.log(err);
-                }
-                else{
-                    // that.position1 += 2;
+              console.log("position player 1",that.position1);
+              if(that.position1<90){
+
+                database.ref('rooms/'+that.roomName+'/player1').set({
+                  username: that.player1,
+                  position: that.position1 + 2
+                },function(err){
+                  if(err){
+                    console.log(err);
+                  }
+                  else{
                     var run = new Audio(runAudio);
                     run.play();
-                }
-              })
-              
+                  }
+                })
+                
+              }
+              if (that.position1 == 90) {
+                var audio = new Audio(soundSonicWin);
+                audio.play();
+                swal({
+                  title: "Player 1 win!",
+                  text: "Lets play again!",
+                  icon: "success",
+                  button: "Yeay!",
+                })
+                router.push('/')
+              }
+              if (that.position1 == 2) {
+                var audio = new Audio(soundSonicStart);
+                audio.play();
+              }
             }
-            if (that.position1 == 90) {
-              var audio = new Audio(soundSonicWin);
-              audio.play();
-              alert("player 1 win");
-            }
-            if (that.position1 == 2) {
-              var audio = new Audio(soundSonicStart);
-              audio.play();
-            }
-          }
         }else {
           alert('you lose ! :(')
         }
@@ -131,14 +112,13 @@ export default {
       } else if (!that2.statusPlayer1) {
         if(that2.position1 < 90) {
           if (e.keyCode == 32) {
-            console.log(that2.position2);
             if(that.position2<90){
               database.ref('rooms/'+that.roomName+'/player2').set({
                 username: that.player2,
                 position: that.position2 + 2
               },function(err){
                 if(err){
-                  console.log(err);
+                  console.log(err)
                 }
                 else{
                   var run = new Audio(runAudio);
@@ -146,20 +126,21 @@ export default {
                 }
               })
             }        
-  
+
             if (that2.position2 == 90) {
               var audio = new Audio(soundMarioWin);
               audio.play();
-              swal(`You win !`)
-                .then((value) => {
-                  if(value) {
-                    router.push('/')
-                  }
-                });
+              swal({
+                title: "Player 2 win!",
+                text: "Lets play again!",
+                icon: "success",
+                button: "Yeay!",
+              });
+              router.push('/')
             }
             if (that2.position2 == 2) {
               var audio = new Audio(soundMarioStart);
-              audio.play();
+              audio.play()
             }
           }
         }else {
@@ -192,7 +173,6 @@ img {
 
 .players {
   margin-top: 440px;
-  /* border: red solid 2px; */
 }
 
 .player1 {

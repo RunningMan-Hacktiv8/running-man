@@ -13,7 +13,7 @@
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"><img src="https://fontmeme.com/permalink/180824/7fd37ca8ab5e99101bdcfcc87703a445.png" alt="pixel-fonts" border="0"></button>
       </div>
       <div class="col-sm-6">
-        <button type="button" class="btn btn-info"><img src="https://fontmeme.com/permalink/180824/9b8671d6e6edce239391a1c81824ffd0.png" alt="pixel-fonts" border="0"></button>
+        <button type="button" class="btn btn-info" @click="toList"><img src="https://fontmeme.com/permalink/180824/9b8671d6e6edce239391a1c81824ffd0.png" alt="pixel-fonts" border="0"></button>
       </div>
     </div>
   </div>
@@ -37,8 +37,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .container {
-  // border: white solid 3px;
-
   text-align: center;
   height: 800px;
 }
@@ -46,14 +44,6 @@ export default {
 .main-image {
   margin-top: 80px;
   margin-bottom: 80px;
-
-  // border: white solid 3px;
-}
-.row {
-  // margin-top: 500px;
-  // border: white solid 3px;
-  // margin: 200px;
-  // vertical-align: middle;
 }
 
 .btn {

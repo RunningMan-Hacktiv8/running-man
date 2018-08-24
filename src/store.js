@@ -13,7 +13,8 @@ export default new Vuex.Store({
     player1: '',
     player2: '',
     statusPlayer1: true,
-    playerOnRoom: ''
+    playerOnRoom: '',
+    roomLength: 0
   },
   mutations: {
     setUsername (state, payload) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setPlayerOnRoom (state, payload) {
       state.playerOnRoom = payload
+    },
+    setRoomLength (state, payload) {
+      state.roomLength = payload
     }
   },
   actions: {
@@ -60,23 +64,20 @@ export default new Vuex.Store({
       }
       if (!status) {
         console.log(self.state.roomName)
-
         database.ref('rooms/' + self.state.roomName + '/player1').set({
           username: self.state.username,
           position: 0
         }, function (err) {
-          //     if (err) console.log(err)
+          if (err) console.log(err)
           self.state.player1 = self.state.username
           self.state.username = ''
           console.log('berhasilll')
           router.push('/play')
-          //     console.log(self.state.player1)
         })
       }
     },
     JoinRoom (context, payload) {
       let self = this
-
       swal('Write something here:', {
         content: 'input'
       })
@@ -86,35 +87,22 @@ export default new Vuex.Store({
               username: value,
               position: 0
             }, function (err) {
-              //     if (err) console.log(err)
+              if (err) console.log(err)
               self.state.player2 = value
               context.commit('setRoomname', key)
               self.state.statusPlayer1 = false
-              console.log('berhasilll')
+              // console.log('berhasilll')
               router.push('/play')
-              //     console.log(self.state.player1)
             })
           }
         })
+    },
+    getRoomLength (context) {
+      database.ref(`rooms/${this.state.roomName}`).on('value', function (snapshot) {
+        let arrayRoom = Object.values(snapshot.val())
+        console.log('array room name', arrayRoom)
+        context.commit('setRoomLength', arrayRoom.length)
+      })
     }
-    // playGame (context, payload) {
-    //   // let status = false
-    //   context.dispatch('getlistRoom')
-    //   console.log("masuk play",this.state.rooms.length);
-    //   console.log(this.state.rooms);
-
-    //   // let self = this
-    //   // for (let i = 0; i < this.state.rooms.length; i++) {
-    //   //   for (var key in this.state.rooms[i]) {
-    //   //     if (key === this.state.roomName) {
-    //   //       var test = "jhjhadkfhj"
-    //   //       console.log("masuk");
-
-    //   //       context.commit('setPlayerOnRoom', test)
-    //   //     }
-    //   //   }
-    //   // }
-    // }
-
   }
 })
