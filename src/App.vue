@@ -2,6 +2,8 @@
   <div id="app">
    
     <div id="nav">
+          <router-link to="/"><img src="https://fontmeme.com/permalink/180824/575eeec72fdc66ff99b88b0da1122505.png" alt="pixel-fonts" border="0"></router-link>
+
     </div>
     <router-view/>
   </div>
