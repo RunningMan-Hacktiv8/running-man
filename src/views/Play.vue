@@ -1,5 +1,8 @@
 <template>
   <div class="about">
+    <audio id=“audio”  autoplay>
+   <source src="http://66.90.93.122/ost/super-mario-bros-2/amokcrqa/03%20-%20Super%20Mario%20Bros%202%20Main%20Theme.mp3"/>
+    </audio>
     <!-- <div class="track-field"> -->
 
       
@@ -149,6 +152,8 @@ export default {
             audio.play();
           }
         }
+      } else if (that.position1 == 90 || that2.position2 == 90) {
+        this.$router.push('/')
       }
     });
   }
@@ -194,8 +199,5 @@ img {
   50% {
     bottom: 5px;
   }
-}
-.about {
-  /* background-image:url("./assets/nigth-track.js") */
 }
 </style>
