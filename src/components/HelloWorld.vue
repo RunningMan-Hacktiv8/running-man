@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import router from '../router'
 export default {
   name: "HelloWorld",
   props: {
@@ -24,7 +25,7 @@ export default {
   },
   methods:{
     toList(){
-      this.$routes.replace('/listRoom')
+      router.push('/listRoom')
     }
   }
 };
