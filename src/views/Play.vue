@@ -2,7 +2,8 @@
   <div class="about">
     <!-- <div class="track-field"> -->
       <div class="players">
-
+          <!-- {{playerOnRoom}} -->
+          <button @click="getPositionFB">clickk</button>
           <div class="player1">
               km: {{ position1 }}
             <img src="../assets/kisspng-sonic-the-hedgehog-2-mario-tails-metal-sonic-pixel-5ac493b33cdba2.7782679115228323072493 (1).png" alt="" v-bind:style="{ marginLeft: position1 + '%' }">
@@ -33,6 +34,8 @@ const runAudio =
   "https://themushroomkingdom.net/sounds/wav/smb3/smb3_stomp.wav";
 
 import { mapState, mapActions } from "vuex";
+import database from '@/firebase/firebase.js'
+
 
 export default {
   data: function() {
@@ -41,44 +44,71 @@ export default {
       position2: 0
     };
   },
+  created(){
+    // this.playGame()
+    this.getPositionFB()
+  },
   computed: {
-    ...mapState(["statusPlayer1"])
+    ...mapState(["statusPlayer1","rooms","roomName","player1","player2"])
   },
   methods: {
-    // counterPlayer1: function() {
-    //   if (this.statusPlayer1) {
-    //     if(this.position1<90){
-    //       this.position1 += 2;
-    //     }
-    //     else if(this.position1 == 90) {
-    //       alert("menang bro");
-    //     }
-    //     console.log("masuk lari 1",this.position1);
-    //   }
-    // },
-    // counterPlayer2: function() {
-    //   if (!this.statusPlayer1) {
-    //     this.position2 += 1;
-    //     if (this.position2 >= 100) {
-    //       alert("menang bro");
-    //     }
-    //     console.log("masuk player 2",this.position2);
-    //   }
-    // },
+    ...mapActions([
+      'getlistRoom'
+    ]),
+    playGame(){
+      this.getlistRoom()
+      this.playerOnRoom = this.rooms
+      // for (let i = 0; i < this.rooms.length; i++) {
+      //   for (var key in this.rooms[i]) {
+      //     for( let j = 0; j < this.rooms[i][key].length; j++){
+      //       for (var keyPlay in this.rooms[i][key][j]) {
+
+      //         this.playerOnRoom = this.rooms[i][key][j][keyPlay]
+      //         console.log("masuk");
+      //       }
+      //     }
+      //     // if (key === this.state.roomName) {
+            
+      //       // context.commit('setPlayerOnRoom', test)            
+      //     // }
+      //   }
+      // }
+
+    },
+    getPositionFB(){
+      let self = this
+      database.ref(`rooms/${self.roomName}`).on('value', function (snapshot) {
+        var players = snapshot.val()
+        self.position1 = players.player1.position
+        self.position2 = players.player2.position
+      })
+    }
   },
   mounted() {
+    // this.playGame()
     let that = this;
     let that2 = this;
-
     window.addEventListener("keypress", function(e) {
       //Sonic
       if (that.statusPlayer1) {
         if (e.keyCode == 32) {
           console.log("position player 1",that.position1);
           if(that.position1<90){
-            that.position1 += 2;
-            var run = new Audio(runAudio);
-            run.play();
+
+            database.ref('rooms/'+that.roomName+'/player1').set({
+              username: that.player1,
+              position: that.position1 + 2
+            },function(err){
+              if(err){
+                console.log(err);
+              }
+              else{
+                  // that.position1 += 2;
+                  var run = new Audio(runAudio);
+                  run.play();
+              }
+            })
+            
           }
           if (that.position1 == 90) {
             var audio = new Audio(soundSonicWin);
@@ -95,9 +125,18 @@ export default {
         if (e.keyCode == 32) {
           console.log(that2.position2);
           if(that.position2<90){
-            that2.position2 += 2;
-            var run = new Audio(runAudio);
-            run.play();
+            database.ref('rooms/'+that.roomName+'/player2').set({
+              username: that.player2,
+              position: that.position2 + 2
+            },function(err){
+              if(err){
+                console.log(err);
+              }
+              else{
+                var run = new Audio(runAudio);
+                run.play();
+              }
+            })
           }        
 
           if (that2.position2 == 90) {

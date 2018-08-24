@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Create Room</button>
       </div>
       <div class="col-sm-6">
-        <button type="button" class="btn btn-info">Join Room</button>
+        <button type="button" class="btn btn-info" @click="toList">Join Room</button>
       </div>
     </div>
   </div>
@@ -16,6 +16,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods:{
+    toList(){
+      this.$routes.replace('/listRoom')
+    }
   }
 }
 </script>

@@ -11,7 +11,8 @@ export default new Vuex.Store({
     rooms: '',
     player1: '',
     player2: '',
-    statusPlayer1: false
+    statusPlayer1: false,
+    playerOnRoom:''
   },
   mutations: {
     setUsername (state, payload) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     setListRooms (state, payload) {
       state.rooms = payload
+    },
+    setPlayerOnRoom ( state, payload){
+      state.playerOnRoom = payload
     }
   },
   actions: {
@@ -49,7 +53,6 @@ export default new Vuex.Store({
             console.log(dataRooms[i][key])
             status = true
             self.state.username = ''
-            self.state.roomName = ''
             alert('room name alreaady used')
           }
         }
@@ -64,7 +67,6 @@ export default new Vuex.Store({
           //     if (err) console.log(err)
           self.state.player1 = self.state.username
           self.state.username = ''
-          self.state.roomName = ''
           console.log('berhasilll')
           //     console.log(self.state.player1)
         })
@@ -84,16 +86,32 @@ export default new Vuex.Store({
             }, function (err) {
               //     if (err) console.log(err)
               self.state.player2 = value
+              context.commit('setRoomname', key)          
               self.state.statusPlayer1 = false
               console.log('berhasilll')
               //     console.log(self.state.player1)
             })
           }
         })
-    },
-    playGame (context, payload) {
-
     }
+    // playGame (context, payload) {
+    //   // let status = false
+    //   context.dispatch('getlistRoom')
+    //   console.log("masuk play",this.state.rooms.length);
+    //   console.log(this.state.rooms);
+      
+    //   // let self = this
+    //   // for (let i = 0; i < this.state.rooms.length; i++) {
+    //   //   for (var key in this.state.rooms[i]) {
+    //   //     if (key === this.state.roomName) {
+    //   //       var test = "jhjhadkfhj"
+    //   //       console.log("masuk");
+            
+    //   //       context.commit('setPlayerOnRoom', test)            
+    //   //     }
+    //   //   }
+    //   // }
+    // }
 
   }
 })
