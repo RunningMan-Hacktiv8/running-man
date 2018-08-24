@@ -7,13 +7,6 @@
   
 </div>
       <div class="col-sm-6">
-
-
-
-
-
-
-
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"><img src="https://fontmeme.com/permalink/180824/7fd37ca8ab5e99101bdcfcc87703a445.png" alt="pixel-fonts" border="0"></button>
       </div>
       <div class="col-sm-6">
@@ -28,6 +21,11 @@ export default {
   name: "HelloWorld",
   props: {
     msg: String
+  },
+  methods:{
+    toList(){
+      this.$routes.replace('/listRoom')
+    }
   }
 };
 </script>
