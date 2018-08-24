@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import database from '@/firebase/firebase.js'
+import router from './router'
 
 Vue.use(Vuex)
 
@@ -68,6 +69,7 @@ export default new Vuex.Store({
           self.state.player1 = self.state.username
           self.state.username = ''
           console.log('berhasilll')
+          router.push('/play')
           //     console.log(self.state.player1)
         })
       }
@@ -86,9 +88,10 @@ export default new Vuex.Store({
             }, function (err) {
               //     if (err) console.log(err)
               self.state.player2 = value
-              context.commit('setRoomname', key)          
+              context.commit('setRoomname', key)
               self.state.statusPlayer1 = false
               console.log('berhasilll')
+              router.push('/play')
               //     console.log(self.state.player1)
             })
           }
@@ -99,15 +102,15 @@ export default new Vuex.Store({
     //   context.dispatch('getlistRoom')
     //   console.log("masuk play",this.state.rooms.length);
     //   console.log(this.state.rooms);
-      
+
     //   // let self = this
     //   // for (let i = 0; i < this.state.rooms.length; i++) {
     //   //   for (var key in this.state.rooms[i]) {
     //   //     if (key === this.state.roomName) {
     //   //       var test = "jhjhadkfhj"
     //   //       console.log("masuk");
-            
-    //   //       context.commit('setPlayerOnRoom', test)            
+
+    //   //       context.commit('setPlayerOnRoom', test)
     //   //     }
     //   //   }
     //   // }

@@ -1,5 +1,8 @@
 <template>
 	<div class="container">
+		<audio id='audio' autoplay>
+        <source src='http://66.90.93.122/ost/super-mario-bros/zawombix/01%20-%20Super%20Mario%20Bros.mp3' />
+       </audio>
 		<div class="row">
 			<div class="col-md-4" style="margin-bottom:5%" v-for="(room, index) in rooms" :key="index">
 				<div class="card" style="width: 18rem;" >
