@@ -10,7 +10,7 @@
 						<h2 class="card-title">{{key}}</h2>
 						<h5>{{nameRoom.length}}/2</h5>
 						<div v-if='nameRoom.length==2'>
-							<p style="color:red" >room penuh</p>
+							<p style="color:red" >Room unavailable</p>
 						</div>
 						<div v-else>
 							<button type="button" class="btn btn-info" @click="JoinRoom(room)">Join</button>

@@ -78,7 +78,7 @@ export default new Vuex.Store({
     },
     JoinRoom (context, payload) {
       let self = this
-      swal('Write something here:', {
+      swal('Please input your Username:', {
         content: 'input'
       })
         .then((value) => {
