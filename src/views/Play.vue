@@ -98,7 +98,11 @@ export default {
                   icon: "success",
                   button: "Yeay!",
                 })
-                router.push('/')
+                .then(val => {
+                  if(val){
+                    window.location="/"
+                  }
+                })
               }
               if (that.position1 == 2) {
                 var audio = new Audio(soundSonicStart);
@@ -106,7 +110,17 @@ export default {
               }
             }
         }else {
-          alert('you lose ! :(')
+          swal({
+            title: "You Lose!",
+            text: "Lets play again!",
+            icon: "warning",
+            button: "Yeay!",
+          })
+          .then(val => {
+            if(val){
+              window.location="/"
+            }
+          })
         }
       //Mario
       } else if (!that2.statusPlayer1) {
@@ -135,8 +149,12 @@ export default {
                 text: "Lets play again!",
                 icon: "success",
                 button: "Yeay!",
-              });
-              router.push('/')
+              })
+              .then(val => {
+                if(val){
+                  window.location="/"
+                }
+              })
             }
             if (that2.position2 == 2) {
               var audio = new Audio(soundMarioStart);
@@ -144,13 +162,17 @@ export default {
             }
           }
         }else {
-           swal(`You lose !`)
-            .then((value)=> {
-              if(value){
-                router.push('/')
-              }
-            });
-          
+           swal({
+            title: "You Lose!",
+            text: "Lets play again!",
+            icon: "warning",
+            button: "Yeay!",
+          })
+          .then(val => {
+            if(val){
+              window.location="/"
+            }
+          })
         }
       } 
     });
