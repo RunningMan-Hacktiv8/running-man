@@ -1,6 +1,8 @@
 <template>
   <div class="about">
     <!-- <div class="track-field"> -->
+
+      
       <div class="players">
           <!-- {{playerOnRoom}} -->
           <button @click="getPositionFB">clickk</button>
@@ -35,7 +37,6 @@ const runAudio =
 
 import { mapState, mapActions } from "vuex";
 import database from '@/firebase/firebase.js'
-
 
 export default {
   data: function() {
@@ -73,7 +74,6 @@ export default {
       //     // }
       //   }
       // }
-
     },
     getPositionFB(){
       let self = this
